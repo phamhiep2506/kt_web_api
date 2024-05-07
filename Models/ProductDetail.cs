@@ -9,7 +9,7 @@ public class ProductDetail
     public int ProductDetailId { get; set; }
 
     [Column(TypeName = "nvarchar(MAX)")]
-    public string? ProductPropertyName { get; set; }
+    public string? ProductDetailName { get; set; }
 
     public int Quantity { get; set; }
 
@@ -19,7 +19,7 @@ public class ProductDetail
     [MaxLength(53)]
     public float ShellPrice { get; set; }
 
-    public int ParentId { get; set; }
+    public int? ParentId { get; set; }
 
     public ICollection<ProductDetailPropertyDetail>? ProductDetailPropertyDetails { get; set; }
 }
