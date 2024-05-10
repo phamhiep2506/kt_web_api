@@ -20,7 +20,7 @@ public class UpdateProductService : IUpdateProductService
     {
         ProductDetail? productDetail = _context
             .ProductDetails?
-            .Where(x => x.ProductDetailName == updateProductDto.ProductName)
+            .Where(x => x.ProductDetailId == updateProductDto.ProductId)
             .SingleOrDefault();
 
         if(productDetail == null)
@@ -32,25 +32,35 @@ public class UpdateProductService : IUpdateProductService
             };
         }
 
+        int diffQuantity = productDetail.Quantity - updateProductDto.Quantity;
+
         productDetail.Quantity = updateProductDto.Quantity;
-        productDetail.Price = updateProductDto.Price;
 
         _context.Update(productDetail);
         _context.SaveChanges();
 
-        ResponseUpdateProductDto responseUpdateProductDto = _mapper.Map<
-            ProductDetail,
-            ResponseUpdateProductDto
-        >(productDetail);
+        while(productDetail?.ParentId != null)
+        {
+            productDetail = _context
+                .ProductDetails?
+                .Where(x => x.ProductDetailId == productDetail.ParentId)
+                .SingleOrDefault();
+
+            if(productDetail == null)
+            {
+                break;
+            }
+
+            productDetail.Quantity -= diffQuantity;
+
+            _context.Update(productDetail);
+            _context.SaveChanges();
+        }
 
         return new ResponseDto<ResponseUpdateProductDto>()
         {
             status = "success",
             message = "Sửa sản phẩm thành công",
-            items = new List<ResponseUpdateProductDto>()
-            {
-                responseUpdateProductDto
-            }
         };
     }
 }

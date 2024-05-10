@@ -19,7 +19,7 @@ public class BuyProductService : IBuyProductService
     {
         ProductDetail? productDetail = _context
             .ProductDetails?
-            .Where(x => x.ProductDetailName == buyProductDto.ProductName)
+            .Where(x => x.ProductDetailId == buyProductDto.ProductId)
             .SingleOrDefault();
 
         if(productDetail == null)
@@ -51,22 +51,34 @@ public class BuyProductService : IBuyProductService
 
         if(productDetail.Quantity >= buyProductDto.Quantity)
         {
-            productDetail.Quantity = productDetail.Quantity - buyProductDto.Quantity;
+            productDetail.Quantity -= buyProductDto.Quantity;
         }
 
         _context.Update(productDetail);
         _context.SaveChanges();
 
-        ResponseBuyProductDto responseBuyProductDto = _mapper
-            .Map<ProductDetail, ResponseBuyProductDto>(productDetail);
-        responseBuyProductDto.BuyQuantity = buyProductDto.Quantity;
-        responseBuyProductDto.SumPrice = buyProductDto.Quantity * responseBuyProductDto.Price;
+        while(productDetail?.ParentId != null)
+        {
+            productDetail = _context
+                .ProductDetails?
+                .Where(x => x.ProductDetailId == productDetail.ParentId)
+                .SingleOrDefault();
+
+            if(productDetail == null)
+            {
+                break;
+            }
+
+            productDetail.Quantity -= buyProductDto.Quantity;
+
+            _context.Update(productDetail);
+            _context.SaveChanges();
+        }
 
         return new ResponseDto<ResponseBuyProductDto>()
         {
             status = "success",
             message = "Mua sản phẩm thành công",
-            items = new List<ResponseBuyProductDto>() { responseBuyProductDto }
         };
     }
 

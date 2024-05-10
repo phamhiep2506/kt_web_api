@@ -21,5 +21,8 @@ public class ProductDetail
 
     public int? ParentId { get; set; }
 
+    [ForeignKey("ParentId")]
+    public ProductDetail? Parent { get; set; }
+
     public ICollection<ProductDetailPropertyDetail>? ProductDetailPropertyDetails { get; set; }
 }
