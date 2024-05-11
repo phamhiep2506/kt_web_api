@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Dtos;
 using Services.IServices;

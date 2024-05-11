@@ -16,14 +16,17 @@ public class UpdateProductService : IUpdateProductService
         _context = context;
     }
 
-    public ResponseDto<ResponseUpdateProductDto> UpdateProduct(UpdateProductDto updateProductDto)
+    public ResponseDto<ResponseUpdateProductDto> UpdateProduct(
+        UpdateProductDto updateProductDto
+    )
     {
         ProductDetail? productDetail = _context
-            .ProductDetails?
-            .Where(x => x.ProductDetailId == updateProductDto.ProductId)
+            .ProductDetails?.Where(x =>
+                x.ProductDetailId == updateProductDto.ProductId
+            )
             .SingleOrDefault();
 
-        if(productDetail == null)
+        if (productDetail == null)
         {
             return new ResponseDto<ResponseUpdateProductDto>()
             {
@@ -39,14 +42,15 @@ public class UpdateProductService : IUpdateProductService
         _context.Update(productDetail);
         _context.SaveChanges();
 
-        while(productDetail?.ParentId != null)
+        while (productDetail?.ParentId != null)
         {
             productDetail = _context
-                .ProductDetails?
-                .Where(x => x.ProductDetailId == productDetail.ParentId)
+                .ProductDetails?.Where(x =>
+                    x.ProductDetailId == productDetail.ParentId
+                )
                 .SingleOrDefault();
 
-            if(productDetail == null)
+            if (productDetail == null)
             {
                 break;
             }

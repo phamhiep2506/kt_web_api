@@ -15,14 +15,18 @@ public class BuyProductService : IBuyProductService
         _mapper = mapper;
         _context = context;
     }
-    public ResponseDto<ResponseBuyProductDto> BuyProduct(BuyProductDto buyProductDto)
+
+    public ResponseDto<ResponseBuyProductDto> BuyProduct(
+        BuyProductDto buyProductDto
+    )
     {
         ProductDetail? productDetail = _context
-            .ProductDetails?
-            .Where(x => x.ProductDetailId == buyProductDto.ProductId)
+            .ProductDetails?.Where(x =>
+                x.ProductDetailId == buyProductDto.ProductId
+            )
             .SingleOrDefault();
 
-        if(productDetail == null)
+        if (productDetail == null)
         {
             return new ResponseDto<ResponseBuyProductDto>()
             {
@@ -31,7 +35,7 @@ public class BuyProductService : IBuyProductService
             };
         }
 
-        if(productDetail.Quantity <= 0)
+        if (productDetail.Quantity <= 0)
         {
             return new ResponseDto<ResponseBuyProductDto>()
             {
@@ -40,7 +44,7 @@ public class BuyProductService : IBuyProductService
             };
         }
 
-        if(productDetail.Quantity < buyProductDto.Quantity)
+        if (productDetail.Quantity < buyProductDto.Quantity)
         {
             return new ResponseDto<ResponseBuyProductDto>()
             {
@@ -49,7 +53,7 @@ public class BuyProductService : IBuyProductService
             };
         }
 
-        if(productDetail.Quantity >= buyProductDto.Quantity)
+        if (productDetail.Quantity >= buyProductDto.Quantity)
         {
             productDetail.Quantity -= buyProductDto.Quantity;
         }
@@ -57,14 +61,15 @@ public class BuyProductService : IBuyProductService
         _context.Update(productDetail);
         _context.SaveChanges();
 
-        while(productDetail?.ParentId != null)
+        while (productDetail?.ParentId != null)
         {
             productDetail = _context
-                .ProductDetails?
-                .Where(x => x.ProductDetailId == productDetail.ParentId)
+                .ProductDetails?.Where(x =>
+                    x.ProductDetailId == productDetail.ParentId
+                )
                 .SingleOrDefault();
 
-            if(productDetail == null)
+            if (productDetail == null)
             {
                 break;
             }
@@ -81,5 +86,4 @@ public class BuyProductService : IBuyProductService
             message = "Mua sản phẩm thành công",
         };
     }
-
 }

@@ -28,12 +28,15 @@ public class BuyProductController : ControllerBase
     [HttpPost]
     public IActionResult BuyProduct(BuyProductDto buyProductDto)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return BadRequest();
         }
 
-        ResponseDto<ResponseBuyProductDto> res = new BuyProductService(_mapper, _context).BuyProduct(buyProductDto);
+        ResponseDto<ResponseBuyProductDto> res = new BuyProductService(
+            _mapper,
+            _context
+        ).BuyProduct(buyProductDto);
         return Ok(res);
     }
 }

@@ -28,12 +28,15 @@ public class UpdateProductController : ControllerBase
     [HttpPost]
     public IActionResult UpdateProduct(UpdateProductDto updateProductDto)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return BadRequest();
         }
 
-        ResponseDto<ResponseUpdateProductDto> res = new UpdateProductService(_mapper, _context).UpdateProduct(updateProductDto);
+        ResponseDto<ResponseUpdateProductDto> res = new UpdateProductService(
+            _mapper,
+            _context
+        ).UpdateProduct(updateProductDto);
         return Ok(res);
     }
 }

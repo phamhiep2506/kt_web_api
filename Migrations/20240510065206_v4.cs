@@ -13,14 +13,16 @@ namespace kt_web_api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProductDetails_ParentId",
                 table: "ProductDetails",
-                column: "ParentId");
+                column: "ParentId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ProductDetails_ProductDetails_ParentId",
                 table: "ProductDetails",
                 column: "ParentId",
                 principalTable: "ProductDetails",
-                principalColumn: "ProductDetailId");
+                principalColumn: "ProductDetailId"
+            );
         }
 
         /// <inheritdoc />
@@ -28,11 +30,13 @@ namespace kt_web_api.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_ProductDetails_ProductDetails_ParentId",
-                table: "ProductDetails");
+                table: "ProductDetails"
+            );
 
             migrationBuilder.DropIndex(
                 name: "IX_ProductDetails_ParentId",
-                table: "ProductDetails");
+                table: "ProductDetails"
+            );
         }
     }
 }

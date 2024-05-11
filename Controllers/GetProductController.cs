@@ -28,12 +28,15 @@ public class GetProductController : ControllerBase
     [HttpGet]
     public IActionResult GetProduct()
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return BadRequest();
         }
 
-        ResponseDto<ResponseGetProductDto> res = new GetProductService(_mapper, _context).GetProduct();
+        ResponseDto<ResponseGetProductDto> res = new GetProductService(
+            _mapper,
+            _context
+        ).GetProduct();
         return Ok(res);
     }
 }
