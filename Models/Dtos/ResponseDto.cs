@@ -1,8 +1,7 @@
 namespace Models.Dtos;
 
-public class ResponseDto<T>
+public class ResponseDto
 {
     public string? status { get; set; }
     public string? message { get; set; }
-    public List<T>? items { get; set; }
 }

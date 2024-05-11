@@ -1,4 +1,3 @@
-using AutoMapper;
 using Models;
 using Models.Dtos;
 using Services.IServices;
@@ -7,18 +6,14 @@ namespace Services;
 
 public class BuyProductService : IBuyProductService
 {
-    private readonly IMapper _mapper;
     private readonly ApplicationDbContext _context;
 
-    public BuyProductService(IMapper mapper, ApplicationDbContext context)
+    public BuyProductService(ApplicationDbContext context)
     {
-        _mapper = mapper;
         _context = context;
     }
 
-    public ResponseDto<ResponseBuyProductDto> BuyProduct(
-        BuyProductDto buyProductDto
-    )
+    public ResponseDto BuyProduct(BuyProductDto buyProductDto)
     {
         ProductDetail? productDetail = _context
             .ProductDetails?.Where(x =>
@@ -28,7 +23,7 @@ public class BuyProductService : IBuyProductService
 
         if (productDetail == null)
         {
-            return new ResponseDto<ResponseBuyProductDto>()
+            return new ResponseDto()
             {
                 status = "error",
                 message = "Sản phẩm không tồn tại"
@@ -37,7 +32,7 @@ public class BuyProductService : IBuyProductService
 
         if (productDetail.Quantity <= 0)
         {
-            return new ResponseDto<ResponseBuyProductDto>()
+            return new ResponseDto()
             {
                 status = "error",
                 message = "Sản phẩm hết hàng"
@@ -46,7 +41,7 @@ public class BuyProductService : IBuyProductService
 
         if (productDetail.Quantity < buyProductDto.Quantity)
         {
-            return new ResponseDto<ResponseBuyProductDto>()
+            return new ResponseDto()
             {
                 status = "error",
                 message = "Sản phẩm không đủ"
@@ -80,7 +75,7 @@ public class BuyProductService : IBuyProductService
             _context.SaveChanges();
         }
 
-        return new ResponseDto<ResponseBuyProductDto>()
+        return new ResponseDto()
         {
             status = "success",
             message = "Mua sản phẩm thành công",

@@ -1,4 +1,3 @@
-using AutoMapper;
 using Models;
 using Models.Dtos;
 using Services.IServices;
@@ -7,18 +6,16 @@ namespace Services;
 
 public class GetProductService : IGetProductService
 {
-    private readonly IMapper _mapper;
     private readonly ApplicationDbContext _context;
 
-    public GetProductService(IMapper mapper, ApplicationDbContext context)
+    public GetProductService(ApplicationDbContext context)
     {
-        _mapper = mapper;
         _context = context;
     }
 
-    public ResponseDto<ResponseGetProductDto> GetProduct()
+    public ResponseDto GetProduct()
     {
-        return new ResponseDto<ResponseGetProductDto>()
+        return new ResponseDto()
         {
             status = "success",
             message = "Lấy sản phẩm thành công",

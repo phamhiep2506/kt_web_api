@@ -4,7 +4,5 @@ namespace Services.IServices;
 
 public interface IUpdateProductService
 {
-    public ResponseDto<ResponseUpdateProductDto> UpdateProduct(
-        UpdateProductDto updateProductDto
-    );
+    public ResponseDto UpdateProduct(UpdateProductDto updateProductDto);
 }

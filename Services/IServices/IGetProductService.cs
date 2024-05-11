@@ -4,5 +4,5 @@ namespace Services.IServices;
 
 public interface IGetProductService
 {
-    public ResponseDto<ResponseGetProductDto> GetProduct();
+    public ResponseDto GetProduct();
 }

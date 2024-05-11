@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Dtos;
@@ -10,17 +9,14 @@ namespace Controller;
 [Route("api/[controller]")]
 public class BuyProductController : ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly ILogger<BuyProductController> _logger;
     private readonly ApplicationDbContext _context;
 
     public BuyProductController(
-        IMapper mapper,
         ILogger<BuyProductController> logger,
         ApplicationDbContext context
     )
     {
-        _mapper = mapper;
         _logger = logger;
         _context = context;
     }
@@ -33,10 +29,9 @@ public class BuyProductController : ControllerBase
             return BadRequest();
         }
 
-        ResponseDto<ResponseBuyProductDto> res = new BuyProductService(
-            _mapper,
-            _context
-        ).BuyProduct(buyProductDto);
+        ResponseDto res = new BuyProductService(_context).BuyProduct(
+            buyProductDto
+        );
         return Ok(res);
     }
 }
