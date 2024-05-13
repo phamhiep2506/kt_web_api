@@ -1,0 +1,16 @@
+ {
+   "configurations": {
+     "launch": {
+       "adapter": "netcoredbg",
+       "configuration": {
+         "request": "launch",
+         "program": "/home/phamhiep/Projects/kt_web_api/bin/Debug/net8.0/kt_web_api.dll",
+         "args": [],
+         "stopAtEntry": false,
+         "env": {
+           "ASPNETCORE_ENVIRONMENT": "Development"
+         }
+       }
+     }
+   }
+ }
