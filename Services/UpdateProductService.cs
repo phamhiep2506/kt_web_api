@@ -50,6 +50,8 @@ public class UpdateProductService : IUpdateProductService
                 break;
             }
 
+            productDetail.Quantity -= diffQuantity;
+
             _context.Update(productDetail);
             _context.SaveChanges();
         }

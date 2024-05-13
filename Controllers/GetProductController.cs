@@ -29,7 +29,7 @@ public class GetProductController : ControllerBase
             return BadRequest();
         }
 
-        ResponseDto res = new GetProductService(_context).GetProduct();
+        ResponseProductDto res = new GetProductService(_context).GetProduct();
         return Ok(res);
     }
 }

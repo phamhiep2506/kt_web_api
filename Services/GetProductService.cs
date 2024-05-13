@@ -1,5 +1,4 @@
 using Models;
-using Models.Dtos;
 using Services.IServices;
 
 namespace Services;
@@ -13,12 +12,24 @@ public class GetProductService : IGetProductService
         _context = context;
     }
 
-    public ResponseDto GetProduct()
+    public ResponseProductDto GetProduct()
     {
-        return new ResponseDto()
+        List<ProductDetail>? productDetails = _context.ProductDetails?.ToList();
+
+        if (productDetails == null)
+        {
+            return new ResponseProductDto()
+            {
+                status = "error",
+                message = "Lấy sản phẩm thất bại",
+            };
+        }
+
+        return new ResponseProductDto()
         {
             status = "success",
             message = "Lấy sản phẩm thành công",
+            items = productDetails
         };
     }
 }

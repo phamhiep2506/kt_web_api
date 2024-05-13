@@ -1,8 +1,8 @@
-using Models.Dtos;
+using Models;
 
 namespace Services.IServices;
 
 public interface IGetProductService
 {
-    public ResponseDto GetProduct();
+    public ResponseProductDto GetProduct();
 }
